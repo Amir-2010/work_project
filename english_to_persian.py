@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter.ttk import Combobox
-from tkinter import messagebox
+from pyperclip import copy,paste
 
 # Function to check selected language and load appropriate UI
 def check_func():
@@ -27,8 +27,13 @@ def check_func():
 def copy_func():
     global window_result
     global label_result
-    window_result.clipboard_append(label_result.cget("text"))
+    copy(label_result.cget("text"))
     window_result.destroy()
+
+def paste_func():
+    global enter_text
+    enter_text.insert("1.0", paste())
+    pass
 
 # Function to convert English keyboard input to Persian
 def eng_to_per():
@@ -137,31 +142,42 @@ def combo_persian():
     enter_text = Text(window,
                       font=("Bnazanin", 20),
                       foreground="#85C0ED")
-    enter_text.place(relx=0.5, y=140, anchor="center", width=300, height=150)
+    enter_text.place(x=190, y=140, anchor="center", width=300, height=150)
 
     # Button to trigger conversion
     change_btn = Button(window,
                         text="تغییر",
                         font=("Bnazanin", 20),
                         command=per_to_eng)
-    change_btn.place(relx=0.5, y=250, anchor="center")
+    change_btn.place(relx=0.5, y=260, anchor="center")
+
+    paste_btn = Button(window,
+                       text="paste",
+                       font=("Arial",20),
+                       command=paste_func)
+    paste_btn.place(x=420,y=140,anchor='center',height=100,width=100)
 
 # UI setup for English input mode
 def combo_english():
     global enter_text
     global change_btn
-
     enter_text = Text(window,
                       font=("Arial", 20),
                       foreground="#85C0ED")
-    enter_text.place(relx=0.5, y=140, anchor="center", width=300, height=150)
+    enter_text.place(x=190, y=140, anchor="center", width=300, height=150)
 
     # Button to trigger conversion
     change_btn = Button(window,
                         text="change",
                         font=("Arial", 20),
                         command=eng_to_per)
-    change_btn.place(relx=0.5, y=250, anchor="center")
+    change_btn.place(relx=0.5, y=260, anchor="center")
+
+    paste_btn = Button(window,
+                       text="paste",
+                       font=("Arial",20),
+                       command=paste_func)
+    paste_btn.place(x=420,y=140,anchor='center',height=100,width=100)
 
 # Main application window
 window = Tk()
